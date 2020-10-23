@@ -8,7 +8,7 @@ public class RoundData : MonoBehaviour
 }
 
 [System.Serializable]
-public struct RoundDataHolder
+public struct RoundDataHolder //gObj is the enemy you want to spawn. Beat is the amount of beats you want to pass AFTER the last enemy spawened before you spawn the enemy
 {
     public int beat;
     public GameObject gObj;
