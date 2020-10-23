@@ -114,17 +114,6 @@ public class Heart : MonoBehaviour
             }
         }
 
-        //if (jumpback)
-        //{
-        //    velocity = new Vector3(-baseVelocity.x, 0);
-        //    if (Vector2.Distance(transform.position, new Vector2(transform.position.x, 0)) < 0.4f)
-        //    {
-        //        jumpback = false;
-        //        transform.position = new Vector2(transform.position.x, ogPos.y);
-        //        velocity = baseVelocity;
-        //    }
-        //}
-
         if (knockback)
         {
             velocity = new Vector2(-baseVelocity.x, 0);

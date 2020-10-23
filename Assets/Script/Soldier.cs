@@ -89,10 +89,8 @@ public class Soldier : MonoBehaviour
 
         if (jumpback)
         {
-            //velocity = new Vector3(-baseVelocity.x, Mathf.Lerp(velocity.y, -jumpVel, t));
             velocity = new Vector3(-baseVelocity.x, 0);
             transform.Rotate(0, 0, -5);
-            //if(Vector2.Distance(transform.position, new Vector2(transform.position.x, 0)) < 0.2f)
             if(GameManager.me.timer > jumpLimit)
             {
                 jumpback = false;

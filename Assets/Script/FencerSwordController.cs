@@ -26,10 +26,6 @@ public class FencerSwordController : MonoBehaviour
     public Sprite up;
     public Sprite guard;
 
-    public List<GameObject> killList;
-    public float[] distances;
-    public float smallestDis;
-
     
     void Awake()
     {
@@ -70,41 +66,13 @@ public class FencerSwordController : MonoBehaviour
             spaceTimer++;
         }
 
-        if(spaceTimer >= dropTimer)
+        if (spaceTimer >= dropTimer)
         {
             sr.sprite = down;
         }
-
-
-        //if (killList.Count > 1)
-        //{
-        //    bc.enabled = false; 
-        //
-        //    for (int i = 0; i < killList.Count - 1; i++)
-        //    {
-        //        distances[i] = Vector2.Distance(playerBody.position, killList[i].gameObject.transform.position);
-        //        smallestDis = Mathf.Min(smallestDis, distances[i]);
-        //    }
-        //
-        //    for (int i = 0; i < killList.Count; i++)
-        //    {
-        //        if (smallestDis == Vector2.Distance(playerBody.position, killList[i].gameObject.transform.position))
-        //        {
-        //            transform.LookAt(new Vector2(transform.position.x, killList[i].gameObject.transform.position.y));
-        //            if (killList[i].gameObject.name == "Dog(Clone)")
-        //            {
-        //                killList[i].gameObject.GetComponent<Dog>().Kill();
-        //            }
-        //        }
-        //    }
-        //
-        //    smallestDis = Mathf.Infinity;
-        //    killList.Clear();
-        //}
-
     }
 
-    void ExecuteSpace()
+    void ExecuteSpace() //Tag of sword collider is changed based on attack. All enemies are handled based on what collider tag they hit
     {
         if(spaceTimer < dropTimer)
         {

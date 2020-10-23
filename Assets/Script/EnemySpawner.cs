@@ -11,19 +11,19 @@ public class EnemySpawner : MonoBehaviour
     public GameObject heart;
 
     public RoundData[] roundDatas;
-    public bool roundActive;
-    public bool roundEnd;
-    public int round;
+    public bool roundActive; //True if more enemies need to be spawned
+    public bool roundEnd; //True while enemies are alive
+    public int round; //Current round
     public int lastBeat;
 
     public int[] beats;
     public GameObject[] enemies;
     public int dataInt;
     
-    public int beatTimer;
-    public int nextBeat;
+    public int beatTimer; //Amount of frames between beats
+    public int nextBeat; //Current beat
 
-    public List<GameObject> liveEnemies;
+    public List<GameObject> liveEnemies; //List of all spawned, alive enemies
 
     public Beat beat;
 
@@ -38,22 +38,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Instantiate(dog, transform.position - (Vector3.up * 0.1f), transform.rotation);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Instantiate(soldier, transform.position + (Vector3.up * 0.35f), transform.rotation);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Instantiate(heart, transform.position + (Vector3.up * 0.5f), transform.rotation);
-        }
-
-        if(FencerSwordController.me.space && roundEnd && GameManager.me.timer > GameManager.me.timerLimit && round != 10)
+        if(FencerSwordController.me.space && roundEnd && GameManager.me.timer > GameManager.me.timerLimit && round != 10) //IF all enemies are dead and the player presses space, advance the round
         {
             round++;
             roundActive = true;
@@ -61,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
             RoundDataCollect();
         }
 
-        if(GameManager.me.PlayerDead == true)
+        if(GameManager.me.PlayerDead == true) //Stop spawning enemies
         {
             roundActive = false;
         }
@@ -74,13 +59,13 @@ public class EnemySpawner : MonoBehaviour
 
         if (round > -1 && roundActive)
         {
-            if (GameManager.me.timer == beatTimer)
+            if (GameManager.me.timer == beatTimer) //"Beats" occur every 15 frames
             {
                 beatTimer = GameManager.me.timer + 15;
                 nextBeat++;
             }
 
-            if(nextBeat == beats[dataInt])
+            if(nextBeat == beats[dataInt]) //If the current beat = the beat the next enemy is meant to spawn on
             {
                 if (enemies[dataInt] == dog)
                 {
@@ -97,12 +82,12 @@ public class EnemySpawner : MonoBehaviour
                     liveEnemies.Add(Instantiate(heart, transform.position + (Vector3.up * 0.5f) - Vector3.forward * 0.1f, transform.rotation));
                 }
 
-                dataInt++;
+                dataInt++; //Moves focus to next enemy
 
-                if (beats[dataInt] == 0)
+                if (beats[dataInt] == 0) //If there are no more enemies
                 {
                     Debug.Log("Hit end of round");
-                    for (int i = 0; i < beats.Length; i++)
+                    for (int i = 0; i < beats.Length; i++) //Clear round data
                     {
                         dataInt = 0;
                         beats[i] = 0;
@@ -110,12 +95,12 @@ public class EnemySpawner : MonoBehaviour
                         nextBeat = 0;
                     }
 
-                    roundActive = false;
+                    roundActive = false; //End Round
                 }
             }
         }
 
-        if(!roundActive && !roundEnd)
+        if(!roundActive && !roundEnd) //If no more enemies need to be spawned, and all enemies are dead, end the round
         {
             if (liveEnemies.Count == 0)
             {
@@ -126,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    void RoundDataCollect()
+    void RoundDataCollect() //Function goes to Round Game objects, taking which enemies to spawn on which beats
     {
         for (int i = 0; i < roundDatas[round].roundDataHolders.Length; i++)
         {
